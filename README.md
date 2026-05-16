@@ -16,6 +16,9 @@
 
 ---
 
+> [!WARNING]
+> **Work In Progress:** This platform is currently in active development. The frontend UI and interactive editor canvas are fully functional, but backend integrations (Supabase persistence, Stripe Checkout) are actively being built and are not 100% production-ready yet.
+
 ## 🌍 Welcome to Lumora
 Lumora is a high-fidelity, design-first e-commerce platform and interactive canvas editor dedicated exclusively to **Travel Photobooks**. Built for modern explorers, Lumora transforms scattered digital memories from Paris, Kyoto, or the Maldives into stunning, professionally bound physical books.
 
