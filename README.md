@@ -88,7 +88,3 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to start des
 - [ ] **Admin Portal:** Headless CMS integration for updating destination collections.
 
 ---
-
-<div align="center">
-  <p>Crafted with ❤️ for modern travelers.</p>
-</div>
