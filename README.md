@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lumora — Custom Travel Photobooks
 
-## Getting Started
+Lumora is a premium, design-first platform for creating exquisite travel photobooks directly in the browser. Focused exclusively on high-end travel memories (Europe Escapes, Island Getaways, Asian Adventures, City Breaks), Lumora allows users to quickly build 20-page spreads with smart layouts, beautiful templates, and dynamic QR code integrations.
 
-First, run the development server:
+## Features
+
+- **Smart Canvas Editor:** A highly interactive Drag-and-Drop canvas (Next.js 14) that feels like a native application.
+- **Destination Templates:** Pre-designed templates with specific color palettes and typographic styling (Paris, Santorini, Kyoto, etc.).
+- **Dynamic Layout Engine:** Easily replace page content with 1-to-6 photo layouts instantly.
+- **Image Upload Gallery:** Drag photos straight from your device, save them to the session gallery, and place them across multiple spreads.
+- **Mobile-Responsive UI:** Fully fluid mobile navigation with animated off-canvas drawers and dark-luxury aesthetics.
+
+## Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Styling:** Tailwind CSS + Vanilla CSS Modules
+- **State Management:** React Hooks (`useState`, `useRef`, `useCallback`)
+- **Icons:** Lucide React
+
+## Development
 
 ```bash
+# Install dependencies
+npm install
+
+# Start the local development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Next Steps
+- Supabase integration for persisting `canvasState` and `uploads`.
+- Stripe Checkout for the `Order` flow.
+- Admin portal for content management.
