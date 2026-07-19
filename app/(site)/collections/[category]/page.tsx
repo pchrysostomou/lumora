@@ -14,6 +14,10 @@ const CATEGORY_LABELS: Record<string, string> = {
   anniversary: "Anniversary Books",
   family: "Family Chronicles",
   graduation: "Graduation Books",
+  europe: "Europe Escapes",
+  islands: "Island Getaways",
+  asia: "Asian Adventures",
+  cities: "City Breaks",
 };
 const CATEGORY_DESC: Record<string, string> = {
   wedding: "Preserve your perfect day in a beautifully printed keepsake.",
@@ -22,6 +26,18 @@ const CATEGORY_DESC: Record<string, string> = {
   anniversary: "Celebrate years of love with a personalised story book.",
   family: "Document your family's story for generations to come.",
   graduation: "Mark this incredible milestone with a premium photo memory.",
+  europe: "Paris, Santorini, the Amalfi Coast — Europe's icons, bound in print.",
+  islands: "Sun, salt, and turquoise water. Books for island souls.",
+  asia: "From Kyoto's temples to Bali's rice terraces — the East, beautifully printed.",
+  cities: "Skylines, streets, and city lights that never sleep.",
+};
+
+// Destination collections group specific travel books by product slug.
+const DESTINATION_SLUGS: Record<string, string[]> = {
+  europe: ["paris-book", "greece-book", "italy-book", "spain-book", "paris-je-taime"],
+  islands: ["greece-book", "bali-book", "maldives-book"],
+  asia: ["japan-book", "bali-book"],
+  cities: ["nyc-book", "paris-book", "spain-book"],
 };
 
 const SORT_OPTIONS = [
@@ -50,7 +66,12 @@ function ProductCard({ product }: { product: Product }) {
     <div className="card group overflow-hidden" style={{ cursor: "pointer", position: "relative" }}>
       <Link href={`/products/${product.slug}`} className="absolute inset-0 z-10" aria-label={product.title} />
       <div className="img-zoom-wrap relative" style={{ aspectRatio: "4/5" }}>
-        <div className="w-full h-full" style={{ background: gradient, minHeight: "240px" }} />
+        {product.coverImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={product.coverImage} alt={product.title} className="w-full h-full" style={{ objectFit: "cover", minHeight: "240px", display: "block" }} />
+        ) : (
+          <div className="w-full h-full" style={{ background: gradient, minHeight: "240px" }} />
+        )}
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           {product.isBestseller && <span className="badge badge-primary" style={{ fontSize: "10px" }}>Bestseller</span>}
           {product.isNew && <span className="badge" style={{ fontSize: "10px", background: "var(--color-fg)", color: "#fff" }}>New</span>}
@@ -84,7 +105,10 @@ export default function CategoryPage() {
   const [sortBy, setSortBy] = useState("popular");
 
   const products = useMemo(() => {
-    let list = PRODUCTS.filter(p => p.category === category);
+    const destSlugs = DESTINATION_SLUGS[category];
+    const list = destSlugs
+      ? PRODUCTS.filter(p => destSlugs.includes(p.slug))
+      : PRODUCTS.filter(p => p.category === category);
     switch (sortBy) {
       case "price_asc":  list.sort((a, b) => a.basePrice - b.basePrice); break;
       case "price_desc": list.sort((a, b) => b.basePrice - a.basePrice); break;

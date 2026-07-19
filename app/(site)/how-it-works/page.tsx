@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Upload, Palette, QrCode, Truck, CheckCircle, ShieldCheck, Star } from "lucide-react";
+import { ArrowRight, Upload, Palette, QrCode, Truck, CheckCircle } from "lucide-react";
 
 const STEPS = [
   {

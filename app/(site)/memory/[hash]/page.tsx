@@ -3,17 +3,20 @@
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { QrCode, Heart, Share2, Download, Camera, Play, ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { QrCode, Heart, Share2, Camera, Play, ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
+import { findOrderByMemoryHash } from "@/lib/storage";
 
-const MOCK_MEMORIES: Record<string, {
+interface Memory {
   title: string;
   author: string;
   date: string;
   coverGradient: string;
   photos: { src: string; caption: string }[];
   message: string;
-}> = {
+}
+
+const MOCK_MEMORIES: Record<string, Memory> = {
   default: {
     title: "Our Honeymoon in Santorini",
     author: "Sofia & Andreas",
@@ -51,16 +54,37 @@ function PhotoSlide({ photo, gradient }: { photo: { src: string; caption: string
 export default function MemoryPage() {
   const params = useParams();
   const hash = (params?.hash as string) || "default";
-  const memory = MOCK_MEMORIES[hash] || MOCK_MEMORIES.default;
 
+  const [memory, setMemory] = useState<Memory>(MOCK_MEMORIES[hash] || MOCK_MEMORIES.default);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [liked, setLiked] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [shareUrl, setShareUrl] = useState(`https://lumora.app/memory/${hash}`);
 
   useEffect(() => {
-    if (typeof window !== "undefined") setShareUrl(window.location.href);
-  }, []);
+    let alive = true;
+    queueMicrotask(() => {
+      if (!alive) return;
+      setShareUrl(window.location.href);
+      // If this hash belongs to a real order stored in this browser, show its photos.
+      const order = findOrderByMemoryHash(hash);
+      if (order) {
+        setMemory({
+          title: order.title,
+          author: order.customer.name || "A Lumora traveller",
+          date: new Date(order.createdAt).toLocaleDateString("en-GB", { month: "long", year: "numeric" }),
+          coverGradient: "linear-gradient(135deg, #0B1629 0%, #1A3A6B 60%, #3B5EA6 100%)",
+          photos: order.photos.length > 0
+            ? order.photos.map((src, i) => ({ src, caption: `Memory ${i + 1}` }))
+            : MOCK_MEMORIES.default.photos,
+          message: "Every page of this book holds a piece of our story. Thank you for scanning!",
+        });
+        setCurrentPhoto(0);
+      }
+    });
+    return () => { alive = false; };
+  }, [hash]);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -125,6 +149,7 @@ export default function MemoryPage() {
             {memory.photos.map((p, i) => (
               <div key={i} className={`memory-grid-thumb ${i === currentPhoto ? "memory-grid-thumb--active" : ""}`} style={{ background: memory.coverGradient }} onClick={() => setCurrentPhoto(i)}>
                 {p.src
+                  // eslint-disable-next-line @next/next/no-img-element -- user photos are data URLs
                   ? <img src={p.src} alt={p.caption} className="w-full h-full object-cover" />
                   : <div className="memory-grid-thumb-placeholder"><Camera size={20} className="opacity-40" /><span>{p.caption}</span></div>
                 }
@@ -150,11 +175,16 @@ export default function MemoryPage() {
                 <button className={`memory-like-btn ${liked ? "memory-like-btn--liked" : ""}`} onClick={() => setLiked(l => !l)}>
                   <Heart size={16} className={liked ? "fill-current" : ""} />{liked ? "Liked!" : "Like"}
                 </button>
-                <button className="memory-share-btn" onClick={() => navigator.share?.({ title: memory.title, url: shareUrl })}>
-                  <Share2 size={16} /> Share
-                </button>
-                <button className="memory-download-btn">
-                  <Download size={16} /> Save QR
+                <button className="memory-share-btn" onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({ title: memory.title, url: shareUrl }).catch(() => {});
+                  } else {
+                    navigator.clipboard?.writeText(shareUrl);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }
+                }}>
+                  <Share2 size={16} /> {copied ? "Link copied!" : "Share"}
                 </button>
               </div>
             </div>

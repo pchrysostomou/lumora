@@ -74,7 +74,7 @@ export default function Footer() {
           </div>
           {subscribed ? (
             <p style={{ color: "#C9806A", fontWeight: 600, fontSize: "15px" }}>
-              ✓ You're in! Check your inbox soon.
+              ✓ You&apos;re in! Check your inbox soon.
             </p>
           ) : (
             <form className="footer-newsletter-form" onSubmit={handleSubscribe}>

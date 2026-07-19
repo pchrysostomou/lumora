@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Star, ArrowUpDown, ChevronRight } from "lucide-react";
-import { PRODUCTS, type Product, type ProductCategory } from "@/lib/data";
+import { PRODUCTS, type Product } from "@/lib/data";
 import { formatPrice } from "@/lib/utils";
 
 // ── Filter categories ─────────────────────────────────────────────────────────
@@ -132,7 +132,7 @@ function ProductCard({ product, idx }: { product: Product; idx: number }) {
 }
 
 // ── Featured travel banner ────────────────────────────────────────────────────
-function TravelBanner() {
+function TravelBanner({ onBrowse }: { onBrowse: () => void }) {
   const travels = PRODUCTS.filter(p => TRAVEL_IDS.has(p.id)).slice(0, 4);
   return (
     <div className="travel-banner">
@@ -140,7 +140,7 @@ function TravelBanner() {
         <span className="travel-series-tag">✈ Travel Series</span>
         <h2>Destination Photobooks</h2>
         <p>Turn your trips into premium keepsakes. Covers for every corner of the world.</p>
-        <button onClick={() => {}} className="travel-banner-link">Browse all destinations →</button>
+        <button onClick={onBrowse} className="travel-banner-link">Browse all destinations →</button>
       </div>
       <div className="travel-banner-books">
         {travels.map((p, i) => (
@@ -167,7 +167,7 @@ export default function CollectionsPage() {
   const [sortBy, setSortBy] = useState("popular");
 
   const filtered = useMemo(() => {
-    let list = activeCategory === "all"
+    const list = activeCategory === "all"
       ? [...PRODUCTS]
       : PRODUCTS.filter(p => p.category === activeCategory);
     switch (sortBy) {
@@ -258,7 +258,7 @@ export default function CollectionsPage() {
         <div className="container" style={{ padding:"40px 24px 80px" }}>
 
           {/* ── Travel banner ── */}
-          {showTravelBanner && <TravelBanner />}
+          {showTravelBanner && <TravelBanner onBrowse={() => setActiveCategory("travel")} />}
 
           {/* ── Pixory-style tab filters ── */}
           <div className="lumora-tabs">

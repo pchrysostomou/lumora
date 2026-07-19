@@ -23,7 +23,7 @@ export default function ContactPage() {
       <section style={{ background:"linear-gradient(135deg,#0B1629,#1A3A6B)", padding:"72px 0 64px", textAlign:"center" }}>
         <div className="container">
           <p style={{ fontSize:"11px", color:"#C4973A", fontWeight:700, letterSpacing:"0.14em", textTransform:"uppercase", marginBottom:"12px" }}>Get in Touch</p>
-          <h1 className="font-serif" style={{ fontSize:"clamp(28px,4vw,48px)", color:"#fff", marginBottom:"12px" }}>We'd Love to Hear From You</h1>
+          <h1 className="font-serif" style={{ fontSize:"clamp(28px,4vw,48px)", color:"#fff", marginBottom:"12px" }}>We&apos;d Love to Hear From You</h1>
           <p style={{ fontSize:"16px", color:"rgba(255,255,255,0.6)" }}>We reply to every message within 24 hours.</p>
         </div>
       </section>
@@ -61,7 +61,7 @@ export default function ContactPage() {
                     <Check size={28} color="#5A8F6A"/>
                   </div>
                   <h3 className="font-serif" style={{ fontSize:"22px", color:"var(--color-fg)", marginBottom:"8px" }}>Message Sent!</h3>
-                  <p style={{ color:"var(--color-muted)", fontSize:"14px" }}>We'll get back to you within 24 hours.</p>
+                  <p style={{ color:"var(--color-muted)", fontSize:"14px" }}>We&apos;ll get back to you within 24 hours.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} style={{ display:"flex", flexDirection:"column", gap:"16px" }}>

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ArrowRight, Star, Upload, Palette, QrCode, Truck, CheckCircle, BookOpen, Zap, Shield } from "lucide-react";
-import { PRODUCTS, CATEGORY_GRADIENTS, type ProductCategory } from "@/lib/data";
 
 const FEATURES = [
   { icon: Upload,    title: "Upload Instantly",    desc: "From any device — phone, desktop, or cloud storage" },
@@ -28,13 +27,6 @@ const FEATURED_CATEGORIES = [
   { key: "asia",         label: "Asian Adventures",         tagline: "Japan, Thailand", image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800" },
   { key: "cities",  label: "City Breaks",  tagline: "New York, London", image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&q=80&w=800" },
 ];
-
-const LUMORA_CATEGORY_GRADIENTS: Record<string, string> = {
-  europe:      "linear-gradient(140deg, #2D3E6B 0%, #4A6FA5 100%)",
-  islands:     "linear-gradient(140deg, #1B4D3E 0%, #3A7D5A 100%)",
-  asia:        "linear-gradient(140deg, #5C3D7A 0%, #9B6BBD 100%)",
-  cities:      "linear-gradient(140deg, #7A3D2E 0%, #C46A3A 100%)",
-};
 
 export default function HomePage() {
   return (
@@ -272,7 +264,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8" style={{ maxWidth: "900px", margin: "0 auto" }}>
-            {HOW_IT_WORKS.map(({ step, title, desc }, i) => (
+            {HOW_IT_WORKS.map(({ step, title, desc }) => (
               <div key={step} style={{ textAlign: "center" }}>
                 <div style={{
                   width: "60px", height: "60px", borderRadius: "12px",
@@ -360,7 +352,7 @@ export default function HomePage() {
             {TESTIMONIALS.map(({ name, location, rating, text, avatar }) => (
               <div key={name} className="card" style={{ padding: "24px" }}>
                 {/* Gold quote mark */}
-                <div style={{ fontSize: "32px", color: "#C4973A", lineHeight: 1, marginBottom: "12px", fontFamily: "serif" }}>"</div>
+                <div style={{ fontSize: "32px", color: "#C4973A", lineHeight: 1, marginBottom: "12px", fontFamily: "serif" }}>&ldquo;</div>
                 <div style={{ display: "flex", gap: "3px", marginBottom: "12px" }}>
                   {Array.from({ length: rating }).map((_, i) => (
                     <Star key={i} size={13} fill="#C4973A" color="#C4973A" />

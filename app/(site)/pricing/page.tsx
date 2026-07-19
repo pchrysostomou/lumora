@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Check, Star } from "lucide-react";
-import { SIZE_LABELS, COVER_LABELS, SIZE_UPGRADES, COVER_UPGRADES, PRICE_PER_EXTRA_PAGE } from "@/lib/data";
+import { SIZE_LABELS, SIZE_UPGRADES, PRICE_PER_EXTRA_PAGE } from "@/lib/data";
 import { formatPrice } from "@/lib/utils";
 
 const BASE_PRICE = 24.99;

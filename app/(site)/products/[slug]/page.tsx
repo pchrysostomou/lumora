@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { Star, ChevronRight, Shield, Truck, RefreshCw, Package, CheckCircle, Minus, Plus } from "lucide-react";
+import { Star, ChevronRight, Shield, Truck, RefreshCw, Package, Minus, Plus } from "lucide-react";
 import { PRODUCTS, SIZE_LABELS, COVER_LABELS, SIZE_UPGRADES, COVER_UPGRADES, PRICE_PER_EXTRA_PAGE, CATEGORY_GRADIENTS, calculatePrice, type Size, type CoverType } from "@/lib/data";
 import { formatPrice } from "@/lib/utils";
 

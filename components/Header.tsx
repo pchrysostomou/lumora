@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ShoppingCart, User, Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { loadDrafts } from "@/lib/storage";
 
 const NAV_LINKS = [
   {
@@ -26,12 +27,19 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [cartCount] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    // Cart badge = drafts in progress; refresh when another tab saves one.
+    const refresh = () => setCartCount(loadDrafts().length);
+    refresh();
+    window.addEventListener("storage", refresh);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("storage", refresh);
+    };
   }, []);
 
   return (
@@ -131,9 +139,10 @@ export default function Header() {
                 <span className="text-sm">Dashboard</span>
               </Link>
 
-              <button
+              <Link
+                href="/dashboard"
                 className="relative btn btn-ghost btn-sm"
-                aria-label="Shopping cart"
+                aria-label="Saved projects"
               >
                 <ShoppingCart size={20} />
                 {cartCount > 0 && (
@@ -141,7 +150,7 @@ export default function Header() {
                     {cartCount}
                   </span>
                 )}
-              </button>
+              </Link>
 
               <Link
                 href="/collections/all"
